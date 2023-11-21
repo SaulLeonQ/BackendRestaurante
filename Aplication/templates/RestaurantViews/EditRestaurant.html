@@ -1,0 +1,12 @@
+<!-- EditRestaurant.html -->
+<h1>Edit Restaurant</h1>
+
+{% if error %}
+    <p>Error: {{ error }}</p>
+{% endif %}
+
+<form method="POST">
+    {% csrf_token %}
+    {{ restaurant_form.as_p }}
+    <button type="submit">Save Changes</button>
+</form>
