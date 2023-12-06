@@ -10,7 +10,7 @@ class BossForm(forms.ModelForm):
     class Meta:
         model = Boss
         exclude = ['ID_M']
-        fields = ['Salary', 'Name', 'Hire_Date', 'Email', 'Phone']
+        fields = ['Salary', 'Name', 'Hire_Date', 'Email', 'Phone','Password']
 
 class MenuForm(forms.ModelForm):
     class Meta:
@@ -20,7 +20,7 @@ class MenuForm(forms.ModelForm):
 class CategoryForm(forms.ModelForm):
     class Meta:
         model = Category
-        fields = ['Cat_ID', 'Type', 'MenuID', 'menu']
+        fields = ['Cat_ID', 'Type', 'Description', 'menu']
 
 class RecipeForm(forms.ModelForm):
     class Meta:
@@ -30,19 +30,15 @@ class RecipeForm(forms.ModelForm):
 class RestaurantForm(forms.ModelForm):
     class Meta:
         model = Restaurant
-        fields = ['ID', 'Address', 'Name', 'Phone', 'boss']
+        fields = ['ID', 'Address', 'Name', 'Phone']
 
 class EmployeeForm(forms.ModelForm):
     class Meta:
         model = Employees
-        fields = ['EmployeeID' ,'Name', 'Age', 'Sex', 'Phone', 'TimeEntry', 'Type', 'RestaurantID', 'restaurant']
+        fields = ['EmployeeID' ,'Name', 'Age', 'Sex', 'Phone', 'TimeEntry', 'Type', 'restaurant']
         labels = {
-           'RestaurantID' : 'Restaurant'
+           'Restaurant'
         }
-        #Combobox for Employees
-        def __init__(self, *arg, **kwargs):
-            super(EmployeeForm, self).__init__(*arg, **kwargs)
-            self.fields['RestaurantID'].queryset = Restaurant.objects.all()
 
 class AdministrativeForm(forms.ModelForm):
     class Meta:
@@ -55,7 +51,7 @@ class ManagerForm(forms.ModelForm):
         model = Manager
         fields = ['Manager_ID', 'Salary', 'Employee_Phone', 'employee']
         labels ={
-            'employee':'Employees'
+            'employee':'Employee'
         }
         #Combobox for Employees
         def __init__(self, *arg, **kwargs):
@@ -87,24 +83,26 @@ class CustomerForm(forms.ModelForm):
 class PayForm(forms.ModelForm):
     class Meta:
         model = Pay
-        fields = ['Method', 'Amount', 'Payment_ID', 'customer']
+        fields = ['Method', 'Amount', 'Payment_ID', 'customer','Transaction_Date','order']
 
 class OrderForm(forms.ModelForm):
     class Meta:
         model = Order
-        fields = ['OrderID', 'SaucersN', 'waiter', 'chef', 'customer_phone', 'customer']
+        fields = ['SaucersN', 'waiter', 'chef', 'customer_phone', 'customer', 'dishes']
+        widgets = {'dishes': forms.CheckboxSelectMultiple}
+
 
 class DishForm(forms.ModelForm):
     class Meta:
         model = Dish
-        fields = ['Dish_ID', 'Type', 'Cost', 'CategoryID', 'RecipeID', 'OrderID', 'category', 'recipe', 'order']
+        fields = ['Dish_ID', 'Name', 'Type', 'Cost', 'category', 'recipe']
 
 class IngredientForm(forms.ModelForm):
     class Meta:
         model = Ingredient
-        fields = ['Ingredient_ID', 'Cost', 'Amount', 'Expiration', 'recipe']
+        fields = ['Cost', 'Name', 'Amount', 'Unit', 'Expiration', 'recipe']
 
 class BillForm(forms.ModelForm):
     class Meta:
         model = Bill
-        fields = ['Amount', 'Bill_ID', 'cashier', 'customer_phone', 'customer']
+        fields = ['Bill_ID', 'cashier', 'customer','pay']

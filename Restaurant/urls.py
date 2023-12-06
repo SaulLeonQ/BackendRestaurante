@@ -1,14 +1,18 @@
 from django.contrib import admin
+from Aplication import views
 from django.urls import path, include
-from Aplication.views import Home, BosList, MenuList, CategoryList, RecipeList, RestaurantList, EmployeeList, AdministrativeList, ManagerList, ChefList, CashierList, WaiterList, CustomerList, PayList, OrderList, DishList, IngredientsList, BillList
+from Aplication.views import Home, BosList, MenuList, CategoryList, RecipeList, RestaurantList, EmployeeList, AdministrativeList, ManagerList, ChefList, CashierList, WaiterList, CustomerList, PayList, OrderList, DishList, IngredientsList, BillList, LoggedHome
 from Aplication.views import CreateBoss, CreateMenu, CreateCategory, CreateRecipe, CreateRestaurant, CreateEmployee, CreateAdministrative, CreateManager, CreateChef, CreateCashier, CreateWaiter, CreateCustomer, CreatePay, CreateOrder, CreateDish, CreateIngredients, CreateBill
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    #path('restaurant/<int:restaurant_id>/', include('Aplication.urls')),
     path('managment/', include('Aplication.urls', namespace='managment')),
-    path('home/', Home, name='index'),
+    path('home/', Home, name='home_login'),
+    path('loggedhome/',LoggedHome, name='loggedhome'),
+    path('login/', views.login, name='login'),
     path('boss_list/', BosList, name='boss_list'),
-    path('create_boss/', CreateBoss, name='create_boss'),
+    path('create_boss/<int:restaurant_id>/', CreateBoss, name='create_boss'),
     path('menu_list/',MenuList, name='menu_list'),
     path('create_menu/', CreateMenu, name='create_menu'),
     path('create_category/', CreateCategory, name='create_category'),
@@ -16,7 +20,7 @@ urlpatterns = [
     path('recipe_list/', RecipeList, name='recipe_list'),
     path('create_recipe/', CreateRecipe, name='create_recipe'),
     path('restaurant_list/', RestaurantList, name='restaurant_list'),
-    path('create_restaurant/', CreateRestaurant, name='crate_restaurant'),
+    path('create_restaurant/', CreateRestaurant, name='CreateRestaurant'),
     path('create_employee/', CreateEmployee, name='create_employee'),
     path('employee_list/', EmployeeList, name='employee_list'),
     path('create_administrative/', CreateAdministrative, name='create_administrative'),
@@ -42,3 +46,8 @@ urlpatterns = [
     path('create_bill/', CreateBill, name='create_bill'),
     path('bill_list/', BillList, name='bill_list'),
 ]
+##urlpatterns = [
+##    path('admin/', admin.site.urls),
+##    path('home/', include('Aplication.urls', namespace='managment')),
+##    path('restaurant/<int:restaurant_id>/', include('Aplication.restaurant_urls')),
+##]

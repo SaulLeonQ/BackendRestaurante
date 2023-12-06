@@ -1,4 +1,5 @@
 from django.urls import path
+from . import views
 from .views import CreateBoss, DeleteBoss, EditBoss, BosList, MenuList, CreateMenu, EditMenu, DeleteMenu
 from .views import CreateCategory, DeleteCategory, EditCategory, CategoryList
 from .views import CreateRecipe, DeleteRecipe, EditRecipe, RecipeList
@@ -14,13 +15,19 @@ from .views import CreatePay, DeletePay, EditPay, PayList
 from .views import CreateOrder, DeleteOrder, EditOrder, OrderList
 from .views import CreateDish, DeleteDish, EditDish, DishList
 from .views import CreateIngredients, DeleteIngredients, EditIngredients, IngredientsList
-from .views import CreateBill, DeleteBill, EditBill, BillList
+from .views import CreateBill, DeleteBill, EditBill, BillList, LoggedHome
+from django.urls import re_path
 
 app_name = 'managment'
 
 urlpatterns = [
+
+    path('login/', views.login, name='login'),
+    path('loggedhome/' , LoggedHome, name='loggedhome'),
+
+
     # Paths for boss
-    path('create_boss/', CreateBoss, name='create_boss'),
+    path('create_boss/<int:restaurant_id>/', views.CreateBoss, name='create_boss'),
     path('boss_list/', BosList, name='boss_list'),
     path('edit_boss/<int:ID_M>/', EditBoss, name='edit_boss'),
     path('delete_boss/<int:ID_M>/', DeleteBoss, name='delete_boss'),
@@ -120,4 +127,8 @@ urlpatterns = [
     path('bill_list/', BillList, name='bill_list'),
     path('edit_bill/<int:Bill_ID>/', EditBill, name='edit_bill'),
     path('delete_bill/<int:Bill_ID>/', DeleteBill, name='delete_bill'),
+
+    #re_path(r'^(?P<restaurant_id>\d+)/', include([
+    #])),
+
 ]

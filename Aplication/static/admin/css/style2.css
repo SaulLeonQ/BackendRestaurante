@@ -1,0 +1,117 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: url('https://th.bing.com/th/id/OIG.7lmWv9cTXsJRDafu1LBD?pid=ImgGn') no-repeat center center fixed;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.6);
+    filter: blur(10px);
+    -webkit-filter: blur(5px);
+    z-index: -1;
+}
+
+.container {
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 90%;
+    min-height: 90vh;
+    text-align: center;
+    background-color: #fff;
+    z-index: 1;
+    margin: 20px auto;
+    display: flex;
+    flex-direction: column;
+}
+h3 {
+    color: #333;
+}
+button {
+    background-color: #d2b48c;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+}
+.navbar {
+    background-color: #D2B48C;
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 12px;
+}
+.navbar-brand {
+    font-size: 12px;
+    color: #fff;
+    font-weight: bold;
+}
+.navbar-nav .nav-link {
+    font-size: 12px;
+    color: #fff;
+    padding: 5px 10px;
+    font-weight: bold;
+}
+.navbar-nav .nav-link:not(:last-child) {
+    margin-right: -9px;
+}
+.btn-link {
+    color: #fff;
+}
+.navbar-toggler-icon {
+    background-color: #d2b48c;
+}
+.navbar-toggler {
+    border: none;
+    margin-right: 10px;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+thead {
+    background-color: #D2B48C;
+    color: #fff;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+tbody tr:hover {
+    background-color: #f5f5f5;
+}
+
+tbody td a {
+    color: #007bff;
+    margin-right: 10px;
+}
+tbody td a:hover {
+    text-decoration: underline;
+}  

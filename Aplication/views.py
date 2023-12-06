@@ -6,19 +6,43 @@ from django.core.exceptions import ObjectDoesNotExist
 # Create your views here.
 
 def Home(request):
+    return render(request, 'home_login.html')
+
+def LoggedHome(request):
     return render(request, 'index.html')
 
+def login(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        try:
+            restaurant = Restaurant.objects.get(boss__Name=username, boss__Password=password)
+        except Restaurant.DoesNotExist:
+            restaurant = None
+
+        if restaurant:
+            return redirect('loggedhome')
+
+    return render(request, 'home_login.html')
+
 # Views for Boss
-def CreateBoss(request):
+def CreateBoss(request, restaurant_id):
+    restaurant=restaurant_id
     if request.method == 'POST':
         boss_form = BossForm(request.POST)
         if boss_form.is_valid():
-            boss_form.save()
-            return redirect('boss_list')
+            boss = boss_form.save()
+
+            restaurant = Restaurant.objects.get(ID=restaurant_id)
+            restaurant.boss = boss
+            restaurant.save()
+
+            return redirect('home_login')
     else:
         boss_form = BossForm()
 
-    return render(request, 'BossViews/CreateBoss.html', {'Boss_form': boss_form})
+    return render(request, 'BossViews/CreateBoss.html', {'boss_form': boss_form, 'restaurant': restaurant})
 
 def BosList(request):
     bosses = Boss.objects.all()
@@ -100,7 +124,7 @@ def CreateCategory(request):
             category_form.save()
             return redirect('category_list')
     else:
-        category_form = MenuForm()
+        category_form = CategoryForm()
 
     return render(request, 'CategoryViews/CreateCategory.html', {'category_form': category_form})
 
@@ -180,8 +204,10 @@ def CreateRestaurant(request):
     if request.method == 'POST':
         restaurant_form = RestaurantForm(request.POST)
         if restaurant_form.is_valid():
-            restaurant_form.save()
-            return redirect('restaurant_list')
+            restaurant = restaurant_form.save()
+            restaurant_id = restaurant.ID
+            return redirect('create_boss', restaurant_id)
+        
     else:
         restaurant_form = RestaurantForm()
 
@@ -551,6 +577,10 @@ def CreateOrder(request):
         order_form = OrderForm(request.POST)
         if order_form.is_valid():
             order_form.save()
+
+            for dish in order_form.cleaned_data['dishes']:
+                dish.increment_popularity()
+
             return redirect('order_list')
     else:
         order_form = OrderForm()
